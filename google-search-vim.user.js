@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         Google Search Vim Navigation
 // @namespace    https://github.com/ngmtine
-// @version      0.1.0
+// @version      0.1.1
 // @description  Google 検索結果を j/k/h/l で vim ライクに操作する
 // @match        https://www.google.com/search*
 // @match        https://www.google.co.jp/search*
+// @downloadURL  https://raw.githubusercontent.com/ngmtine/google-search-vim/master/google-search-vim.user.js
+// @updateURL    https://raw.githubusercontent.com/ngmtine/google-search-vim/master/google-search-vim.user.js
 // @grant        none
 // @run-at       document-idle
 // ==/UserScript==

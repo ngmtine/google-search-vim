@@ -8,6 +8,16 @@ Tampermonkey / Violentmonkey での利用を想定した単一ファイル・依
 
 `google-search-vim.user.js` をユーザースクリプトマネージャに読み込む。
 
+### 🔗 raw URL からインストール (推奨)
+
+Tampermonkey / Violentmonkey を導入済みのブラウザで以下の URL を開くと、インストール画面が表示される。⬇️
+
+```
+https://raw.githubusercontent.com/ngmtine/google-search-vim/master/google-search-vim.user.js
+```
+
+メタデータの `@updateURL` / `@downloadURL` がこの URL を指しているため、master を更新すれば各ブラウザに自動更新が配信される。🔄
+
 ### 🐒 Tampermonkey
 
 1. 🧭 Tampermonkey の管理画面を開く。
