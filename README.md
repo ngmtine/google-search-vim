@@ -64,6 +64,22 @@ IME 変換中の keydown も横取りしない。🇯🇵
 // @match        https://www.google.de/search*
 ```
 
+## 🧩 Vimium との共存
+
+Vimium (Vimium C も同様) は拡張機能としてページより先にキー入力を受け取り、マップ済みのキーはそこで止める。🚧
+そのため Vimium 側で `j` などをマップしていると、本スクリプトにはキーが届かない。
+これは userscript 側では回避できないため、Vimium の設定 (Options → Excluded URLs and keys) で検索結果ページのキーを素通しさせる。🔧
+
+| Patterns | Passed keys |
+|---|---|
+| `https?://www.google.com/search*` | `jkhlgG` |
+| `https?://www.google.co.jp/search*` | `jkhlgG` |
+
+`/` を Vimium 側でマップしている場合 (既定ではページ内検索) は、`/` も Passed keys に足す。🔎
+`g` を素通しさせると、そのページでは Vimium の `g` 系シーケンス (`gi` / `gf` など) が効かなくなる。⚖️
+`o` を Vimium のリンクヒントに残す場合でも、フォーカス中の結果は Enter / Ctrl+Enter (ブラウザ標準) で開ける。↩️
+`o` を本スクリプトに譲るなら Passed keys に `o` を足す。
+
 ## 🧠 設計メモ
 
 ### 🚫 難読化された class 名に依存しない
