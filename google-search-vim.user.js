@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Google Search Vim Navigation
 // @namespace    https://github.com/ngmtine
-// @version      0.1.1
+// @version      0.1.2
 // @description  Google 検索結果を j/k/h/l で vim ライクに操作する
 // @match        https://www.google.com/search*
 // @match        https://www.google.co.jp/search*
@@ -17,6 +17,8 @@
     const FOCUS_ATTR = "data-gsv-focus";
     const GG_INTERVAL_MS = 500;
     const PAGE_SIZE = 10;
+    /** フォーカス先が画面内に収まっているとみなすための上下マージン (px) */
+    const SCROLL_MARGIN_PX = 80;
 
     /** 現在フォーカス中の結果アンカー。インデックスではなく要素参照で持つ (DOM 差し替えで番号がずれるため) */
     let focusedAnchor = null;
@@ -107,9 +109,17 @@
         // 同一の関数参照なので、重ねて呼んでもリスナは重複登録されない
         anchor.addEventListener("blur", onAnchorBlur);
 
-        // focus() 由来のスクロールは端に寄るだけなので抑止し、自前で中央に寄せる
+        // focus() 由来のスクロールは端に寄るだけなので抑止し、スクロールは自前で判断する
         anchor.focus({ preventScroll: true });
-        anchor.scrollIntoView({ block: "center" });
+
+        // 移動のたびに中央寄せするとビューポートが毎回跳ねて追いにくい。
+        // 上下に余白を残して画面内に収まっている間はスクロールせず、
+        // 画面外か端に近いときだけ中央へ寄せる (vim の scrolloff に近い挙動)。
+        const rect = anchor.getBoundingClientRect();
+        const isComfortablyVisible = rect.top >= SCROLL_MARGIN_PX && rect.bottom <= window.innerHeight - SCROLL_MARGIN_PX;
+        if (!isComfortablyVisible) {
+            anchor.scrollIntoView({ block: "center" });
+        }
     };
 
     const moveFocus = (delta) => {

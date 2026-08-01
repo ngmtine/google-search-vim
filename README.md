@@ -90,7 +90,10 @@ MutationObserver でキャッシュを保守する方法も取らず、状態を
 
 ### 🎯 アンカーに実 focus を当てる
 
-移動先のアンカーには `focus({ preventScroll: true })` で実際のフォーカスを与え、その後 `scrollIntoView({ block: "center" })` で中央に寄せる。
+移動先のアンカーには `focus({ preventScroll: true })` で実際のフォーカスを与え、スクロールするかどうかは自前で判断する。🖱️
+上下 80px の余白を残して画面内に収まっているときはスクロールしない。
+画面外にあるか端に近いときだけ `scrollIntoView({ block: "center" })` で中央に寄せる。
+移動のたびに中央寄せするとビューポートが毎回跳ねて追いにくいため、vim の scrolloff に近い挙動にしている。🪟
 擬似的な選択状態ではなく実 focus なので、Enter や Ctrl+Enter といったブラウザ標準のキー操作をそのまま利用できる。↩️
 
 フォーカスリングだけでは視認しにくいため、`a[data-gsv-focus]` に対するアウトラインを `<style>` で注入して併用する。🖍️
